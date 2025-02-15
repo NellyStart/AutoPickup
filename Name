@@ -1,0 +1,96 @@
+-- Подключаем необходимые сервисы
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Получаем ссылку на вашего персонажа
+local player = Players.LocalPlayer
+local character
+local torso
+
+-- Функция для телепортации объекта
+local function teleportObject(object, targetPosition)
+    if object:IsA("BasePart") then
+        object.CFrame = CFrame.new(targetPosition)
+    elseif object:IsA("Model") then
+        for _, child in ipairs(object:GetChildren()) do
+            if child:IsA("BasePart") then
+                child.CFrame = CFrame.new(targetPosition)
+            end
+        end
+    end
+end
+
+
+local function findAndTeleport()
+    if not player or not player.Character then return end
+    character = player.Character or player.CharacterAdded:Wait()
+    torso = character:FindFirstChild("Torso")
+
+    if not torso then return end
+
+    -- Ищем объекты M40, Deagle и C4 в Debris
+    local debris = workspace.Debris
+    local M40 = debris:FindFirstChild("M40")
+    local Deagle = debris:FindFirstChild("Deagle")
+    local C4 = debris:FindFirstChild("C4")
+	local Stim = debris:FindFirstChild("Stim") -- Добавлено обнаружение Stim
+
+    -- Вычисляем целевую позицию (1 метр ниже)
+    local targetPosition = torso.Position - Vector3.new(0, 2.7, 0)
+
+    -- Телепортируем M40
+    if M40 then
+        teleportObject(M40, targetPosition)
+    else
+        --warn("M40 не найден!")
+    end
+
+    if Stim then
+        teleportObject(Stim, targetPosition)
+    else
+        --warn("Stim не найден!")
+    end
+    -- Телепортируем Deagle
+    if Deagle then
+        for _, child in ipairs(Deagle:GetChildren()) do
+            teleportObject(child, targetPosition)
+        end
+    else
+        --warn("Deagle не найден!")
+    end
+
+    -- Телепортируем C4
+    if C4 then
+        teleportObject(C4, targetPosition) -- Телепортируем C4
+    else
+        --warn("C4 не найден!")
+    end
+end
+
+-- Запускаем функцию findAndTeleport()  каждые 1 секунду
+RunService.Heartbeat:Connect(function(dt)
+    -- Запускаем функцию, только если игрок и персонаж существуют
+    if player and player.Character then
+        findAndTeleport()
+    end
+end)
+
+--🎩Send Notification🎩
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+
+-- Создаем функцию для отображения оповещения
+local function sendNotification()
+    local message = "github.com/NellyStart"
+    
+    -- Отправляем уведомление всем игрокам
+    StarterGui:SetCore("SendNotification", {
+        Title = "Inf Jump Bypass",
+        Text = message,
+        Duration = 6 -- Продолжительность уведомления в секундах
+    })
+end
+
+-- Вызываем функцию
+sendNotification()
