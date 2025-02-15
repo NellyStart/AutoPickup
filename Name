@@ -86,7 +86,7 @@ local function sendNotification()
     
     -- Отправляем уведомление всем игрокам
     StarterGui:SetCore("SendNotification", {
-        Title = "Inf Jump Bypass",
+        Title = "Auto Pickup",
         Text = message,
         Duration = 6 -- Продолжительность уведомления в секундах
     })
