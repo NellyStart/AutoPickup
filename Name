@@ -33,7 +33,8 @@ local function findAndTeleport()
     local debris = workspace.Debris
     local M40 = debris:FindFirstChild("M40")
     local Deagle = debris:FindFirstChild("Deagle")
-    local C4 = debris:FindFirstChild("C4")
+    local PlantedC4 = debris:FindFirstChild("PlantedC4")
+	local C4 = debris:FindFirstChild("C4")
 	local Stim = debris:FindFirstChild("Stim") -- Добавлено обнаружение Stim
 
     -- Вычисляем целевую позицию (1 метр ниже)
@@ -60,11 +61,17 @@ local function findAndTeleport()
         --warn("Deagle не найден!")
     end
 
-    -- Телепортируем C4
     if C4 then
         teleportObject(C4, targetPosition) -- Телепортируем C4
     else
         --warn("C4 не найден!")
+    end
+
+    -- Телепортируем C4
+    if PlantedC4 then
+        teleportObject(PlantedC4, targetPosition) -- Телепортируем PlantedC4
+    else
+        --warn("PlantedC4 не найден!")
     end
 end
 
