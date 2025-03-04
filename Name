@@ -35,7 +35,7 @@ local function findAndTeleport()
     local Deagle = debris:FindFirstChild("Deagle")
     local PlantedC4 = debris:FindFirstChild("PlantedC4")
 	local C4 = debris:FindFirstChild("C4")
-	local Stim = debris:FindFirstChild("Stim") -- Добавлено обнаружение Stim
+	local LaserMine = debris:FindFirstChild("Laser Mine") -- Добавлено обнаружение Stim
 
     -- Вычисляем целевую позицию (1 метр ниже)
     local targetPosition = torso.Position - Vector3.new(0, 2.7, 0)
@@ -47,8 +47,8 @@ local function findAndTeleport()
         --warn("M40 не найден!")
     end
 
-    if Stim then
-        teleportObject(Stim, targetPosition)
+    if LaserMine then
+        teleportObject(LaserMine, targetPosition)
     else
         --warn("Stim не найден!")
     end
